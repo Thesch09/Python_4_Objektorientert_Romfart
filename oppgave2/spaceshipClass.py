@@ -16,7 +16,7 @@ class Spaceship:
         spacechips.append(self) # Adds self to the spacechips list
 
     def provideInfo(self):
-        return f"I am the spaceship [[{self.name}]].\nI am moving at [[{self.speed} KM/H]].\nMy max speed is [[{self.maxSpeed} KM/H]]\nI can speed up with [[{self.throtle} KM/H]] by using [[{self.fuelEfficiency} L]] fuel per [[KM/H]]\nMy current fuel level is at [[{self.fuel/(self.maxFuel/100):.2f}%]], aka [[{self.fuel:.2f}/{self.maxFuel} L]]"
+        return f"I am the spaceship [{self.name}].\nI am moving at [{self.speed} KM/H].\nMy max speed is [{self.maxSpeed} KM/H]\nI can speed up with [{self.throtle} KM/H] by using [{self.fuelEfficiency} L] fuel per [KM/H]\nMy current fuel level is at [{self.fuel/(self.maxFuel/100):.2f}%], aka [{self.fuel:.2f}/{self.maxFuel} L]"
 
     def speedUp(self):
         additionalMessage = "" # Provides extra flavor to the user when the function succeeds
@@ -25,15 +25,18 @@ class Spaceship:
         usedThrotle = self.throtle 
         if speedDiff > 0: # If speedDiff is a positive number, subract it from the throtle
             usedThrotle -= speedDiff
-            additionalMessage += f" [[{self.name}]] is now at max speed!"
+            additionalMessage += f" [{self.name}] is now at max speed!"
 
         usedFuel = self.fuelEfficiency * usedThrotle # Calc fuel usage
         fuelDiff = self.fuel - usedFuel # Check how much fuel the ship will have afterwards
         if fuelDiff < 0: # If future fuel is less than 0, it will
-            additionalMessage += f" [[{self.name}]] is now out of fuel!"
+            additionalMessage += f" [{self.name}] is now out of fuel!"
             usedThrotle += fuelDiff / self.fuelEfficiency  # Due to the if, I am very sure that this will be negative. 1 - -1 = 2 and 1 + -1 = 0
             usedFuel = self.fuelEfficiency * usedThrotle
         
         self.speed += usedThrotle
         self.fuel -= self.fuelEfficiency*usedThrotle
-        return f"Spaceship [[{self.name}]] has sped up to [[{self.speed:.2f} KM/H]] using [[{usedFuel:.2f} L]] fuel and has [[{self.fuel:.2f} L]] fuel remaining.{additionalMessage}"
+        return f"Spaceship [{self.name}] has sped up to [{self.speed:.2f} KM/H] using [{usedFuel:.2f} L] fuel and has [{self.fuel:.2f} L] fuel remaining.{additionalMessage}"
+
+    def specialAttack(self):
+        return f"Spaceship [{self.name}] is using a [bold]special attack[/]!"
