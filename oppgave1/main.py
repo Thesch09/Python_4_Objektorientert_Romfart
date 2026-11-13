@@ -1,4 +1,5 @@
 from rich import print
+spacechips = []
 
 class Spaceship:
     def __init__(self, name, maxSpeed, speed, throtle, maxFuel, fuelEfficiency, fuel = None):
@@ -13,8 +14,10 @@ class Spaceship:
         self.fuel = fuel # The current fuel the ship has. Float
         self.isExploded = False # Has the ship exploded? Bool
 
+        spacechips.append(self) # Adds self to the spacechips list
+
     def provideInfo(self):
-        return f"I am spaceship [[{self.name}]].\nI am moving at [[{self.speed} KM/H]].\nMy max speed is [[{self.maxSpeed} KM/H]]\nI can speed up with [[{self.throtle} KM/H]] by using [[{self.fuelEfficiency} L]] fuel per [[KM/H]]\nMy current fuel level is at [[{self.fuel/(self.maxFuel/100):.2f}%]], aka [[{self.fuel}/{self.maxFuel} L]]"
+        return f"I am the spaceship [[{self.name}]].\nI am moving at [[{self.speed} KM/H]].\nMy max speed is [[{self.maxSpeed} KM/H]]\nI can speed up with [[{self.throtle} KM/H]] by using [[{self.fuelEfficiency} L]] fuel per [[KM/H]]\nMy current fuel level is at [[{self.fuel/(self.maxFuel/100):.2f}%]], aka [[{self.fuel}/{self.maxFuel} L]]"
 
     def speedUp(self):
         additionalMessage = "" # Provides extra flavor to the user when the function succeeds
@@ -37,6 +40,11 @@ class Spaceship:
         return f"Spaceship [[{self.name}]] has sped up to [[{self.speed:.2f} KM/H]] using [[{usedFuel:.2f} L]] fuel and has [[{self.fuel:.2f} L]] fuel remaining.{additionalMessage}"
 
 jS = Spaceship("Johnathan Spaceship", 1997, 800, 100, 1000, 2.3, 453.5)
+dolphin = Spaceship("S.S. Dolphin", 20010, 2001, 201, 20010, 2.1)
+for chip in spacechips:
+    print(chip.provideInfo())
+    print(chip.speedUp())
+    print()
+
 print(jS.provideInfo())
-print(jS.speedUp())
 print(jS.speedUp())
