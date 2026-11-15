@@ -29,3 +29,19 @@ class PeopleCarrier(Spaceship):
         #print(ceil((neededNutrients - self.nutrients)/self.humanNutrients) * self.humanNutrients)
         self.nutrients -= neededNutrients
         return f"The [{self.people}] people aboard spaceship [{self.name}] have consumed [{neededNutrients} KG] nutrients. But... [{lostPeople}] people are missing...?"
+
+class OrbitalLaser(Spaceship):
+    def __init__(self, name, maxSpeed, speed, throtle, maxFuel, fuelEfficiency, target, enemy = None, fuel = None):
+        super().__init__(name, maxSpeed, speed, throtle, maxFuel, fuelEfficiency, fuel)
+        self.target = target
+        self.enemy = enemy
+
+    def provideInfo(self):
+        if self.enemy != None:
+            return f"I am the spaceship [{self.name}].\nI am moving at [{self.speed} KM/H].\nMy max speed is [{self.maxSpeed} KM/H]\nI can speed up with [{self.throtle} KM/H] by using [{self.fuelEfficiency} L] fuel per [KM/H]\nMy current fuel level is at [{self.fuel/(self.maxFuel/100):.2f}%], aka [{self.fuel:.2f}/{self.maxFuel} L]\nMy enemy is [{self.enemy}], and I will blow up \[{self.target}] to get back at them"
+        return f"I am the spaceship [{self.name}].\nI am moving at [{self.speed} KM/H].\nMy max speed is [{self.maxSpeed} KM/H]\nI can speed up with [{self.throtle} KM/H] by using [{self.fuelEfficiency} L] fuel per [KM/H]\nMy current fuel level is at [{self.fuel/(self.maxFuel/100):.2f}%], aka [{self.fuel:.2f}/{self.maxFuel} L]\nI will blow up \[{self.target}] if they get too close"
+
+    def specialAttack(self):
+        if self.enemy != None:
+            return f"I'M PISSING ON [{self.target}]!\nHOW DO YOU LIKE THAT [{self.enemy}]!?\nI PISSED ON [{self.target}] YOU IDIOT!" # This is a reference to Eggman's Announcement
+        return f"[{self.name}] blew up \[{self.target}]"
