@@ -97,3 +97,32 @@ class Merrymer(FoolishOS):
             self.state = "nuetral"
             return f"[{self.name}] has finished chargin' and is ready to play games!"
         return f"[{self.name}] spent a Space Year (TM) chargin'"
+
+class RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety(FoolishOS): # This is the part where he kills you
+    def __init__(self, name, area, maxPower, kwh, age, maxHP, maxRoboticMana, baseDmg, variableDmg, secretMove, roboticMana = None, hp = None, power = None):
+        super().__init__(name, area, maxPower, kwh, age, power)
+        self.maxHP = maxHP
+        self.maxRoboticMana = maxRoboticMana
+        self.baseDmg = baseDmg
+        self.variableDmg = variableDmg
+        self.secretMove = secretMove
+
+        self.state = "alive"
+
+        self.hp = hp
+        if hp == None:
+            self.hp = self.maxHP
+        self.roboticMana
+        if roboticMana == None:
+            self.roboticMana = self.maxRoboticMana
+
+    def timeForMISSSIONNNNN(self): # Despite everything, it's still a DougDoug reference
+        if randint(1,3) == 3 or self.state == "combat":
+            pass # initiate combat
+        elif randint(1,9) == 9:
+            pass # create a new Robotic Spider that will eat everyone you know and love for safety. They art a parasite
+        elif randint(1,27) == 27:
+            self.hp = 0
+            self.state = "exploded"
+            return f"[{self.name}] randomly just exploded. It's dead now. Yikes."
+        return f"[{self.name}] is going to kill something"
