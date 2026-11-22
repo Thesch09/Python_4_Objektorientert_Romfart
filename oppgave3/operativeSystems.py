@@ -119,7 +119,7 @@ class RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety(FoolishOS): # This
             self.roboticMana = self.maxRoboticMana
 
     def haveANiceChitChat(self):
-        return f"I am [{self.name}], and I am a Robotic Spider That Will Eat Everyone You Know And Love (for safety) that has existed for [{self.age}] Space Years (TM).\nI devour things in [{self.area}].\nMy current power level is at [{self.power/(self.maxPower/100):.2f}%], aka [{self.power:.2f}/{self.maxPower} KW] and I use [{self.kwh} KWH].\nI am currently on [{self.hp}/{self.maxHP} HP], [{self.roboticMana:.2f}/{self.maxRoboticMana} RM] and I am currently [{self.state}].\nMy base damage is [{self.baseDmg}], can vary with [{self.variableDmg}] and my secret move is [{self.secretMove}]"
+        return f"I am [{self.name}], and I am a Robotic Spider That Will Eat Everyone You Know And Love (for safety) that has existed for [{self.age}] Space Years (TM).\nI devour things in [{self.area}].\nMy current power level is at [{self.power/(self.maxPower/100):.2f}%], aka [{self.power:.2f}/{self.maxPower} KW] and I use [{self.kwh} KWH].\nI am currently on [{self.hp}/{self.maxHP} HP], [{self.roboticMana:.2f}/{self.maxRoboticMana} RM] and I am currently \[{self.state}].\nMy base damage is [{self.baseDmg}], can vary with [{self.variableDmg}] and my secret move is [{self.secretMove}]"
 
     def tickThisMachine(self):
         if self.state == "exploded":
@@ -129,10 +129,26 @@ class RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety(FoolishOS): # This
         self.roboticMana += self.maxRoboticMana / 10 + self.roboticMana / 25
         if self.roboticMana > self.maxRoboticMana:
             self.roboticMana = self.maxRoboticMana
-        return super().tickThisMachine()
+        print(self.haveANiceChitChat())
+        if self.power <= 0:
+            input()
+            return self.explode()
+        self.power -= self.kwh * floor(self.age/5)
+        if self.power < 0:
+            self.power = 0
+        print(self.timeForMISSSIONNNNN())
+        print()
+        self.age += 1
+        return f"[{self.name}] is done with its activities this Space Year"
+
+    def explode(self):
+        self.hp = 0
+        self.state = "exploded"
+        return f"[{self.name}] randomly just exploded. It's dead now. Yikes."
 
     def timeForMISSSIONNNNN(self): # Despite everything, it's still a DougDoug reference
         brainwaves = randint(1,15)
+        input()
         if brainwaves <= 6 or self.state == "combat":
             if brainwaves > 6:
                 brainwaves = randint(1,6)
@@ -143,20 +159,27 @@ class RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety(FoolishOS): # This
             self.offspring += 1
             return f"[{self.name}] cloned itself using [{floor(self.maxRoboticMana/2)} RM]."
         elif brainwaves == 15:
-            self.hp = 0
-            self.state = "exploded"
-            return f"[{self.name}] randomly just exploded. It's dead now. Yikes."
+            self.explode()
         return f"[{self.name}] is going to kill something"
 
-    def warWarNeverChanges(self,brainwaves):
+    def warWarNeverChanges(self,bw):
+        # intro to combat
         if self.state != "combat":
             self.state = "combat"
             self.target = "a random civilian"
             print(f"[{self.name}] has started a fight against \[{self.target}]!")
-        notOver = False
+        
+        if self.RSTWEEYKALFSturn(bw): # RSTWEEYKALFS' turn
+            input()
+            return self.targetTurn() # Targets turn
+        else:
+            input()
+            self.state = "alive"
+            return f"[{self.name}] won the battle against \[{self.target}]"
 
-        # RSTWEEYKALFS' turn
-        if brainwaves == 6 and self.roboticMana >= floor(20+self.maxRoboticMana/7):
+    def RSTWEEYKALFSturn(self, bw):
+        notOver = False
+        if bw == 6 and self.roboticMana >= floor(20+self.maxRoboticMana/7):
             print(f"[{self.name}] is using [{self.secretMove}] on \[{self.target}]!")
             print(f"It dealt [{(self.baseDmg + randint(self.variableDmg[0], self.variableDmg[1]))*2}] damage!")
             print(f"[{self.name}] used [{floor(20+self.maxRoboticMana/7)} RM]")
@@ -164,7 +187,7 @@ class RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety(FoolishOS): # This
             if randint(1,3) != 3:
                 notOver = True
 
-        elif brainwaves >= 4 and self.hp != self.maxHP:
+        elif bw >= 4 and self.hp != self.maxHP:
             notOver = True
             heal = randint(5, floor(self.maxHP/20)) + floor(self.age/20)
             if self.hp > self.maxHP:
@@ -178,20 +201,18 @@ class RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety(FoolishOS): # This
             if randint(1,8) != 8 or dmg < 0:
                 notOver = True
 
-        # Targets turn
-        if notOver:
-            brainwaves = randint(1,3)
-            if brainwaves == 1:
-                return f"\[{self.target}] cowered in fear\nThe battle is not over"
-            elif brainwaves == 2:
-                return f"\[{self.target}] tried to run away, but [{self.name}] is too fast\nThe battle is not over"
-            else:
-                dmg = randint(5, 25) + floor(self.age/2)
-                self.hp -= dmg
-                if self.hp <= 0:
-                    self.state = "dead"
-                    return f"\[{self.target}] attacked [{self.name}] dealing [{dmg}] damage... and won! [{self.name}] is dead now"
-                return f"\[{self.target}] attacked [{self.name}] dealing [{dmg}] damage... the battle is not over"
+        return notOver
 
+    def targetTurn(self):
+        brainwaves = randint(1,3)
+        if brainwaves == 1:
+            return f"\[{self.target}] cowered in fear\nThe battle is not over"
+        elif brainwaves == 2:
+            return f"\[{self.target}] tried to run away, but [{self.name}] is too fast\nThe battle is not over"
         else:
-            return f"[{self.name}] won the battle against \[{self.target}]"
+            dmg = randint(5, 25) + floor(self.age/2)
+            self.hp -= dmg
+            if self.hp <= 0:
+                self.state = "dead"
+                return f"\[{self.target}] attacked [{self.name}] dealing [{dmg}] damage... and won! [{self.name}] is dead now"
+            return f"\[{self.target}] attacked [{self.name}] dealing [{dmg}] damage... the battle is not over"
