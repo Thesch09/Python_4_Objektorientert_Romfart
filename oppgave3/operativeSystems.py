@@ -60,7 +60,7 @@ class CheffOTron(FoolishOS):
         return f"I am [{self.name}], and I am a Cheff-O-Tron that has existed for [{self.age}] Space Years (TM).\nI work in the [{self.area}] and I am currently [{self.state}].\nMy current power level is at [{self.power/(self.maxPower/100):.2f}%], aka [{self.power:.2f}/{self.maxPower} KW] and I use [{self.kwh} KWH].\nI make [{self.whichMeal}] for the employes in the [{self.area}]."
 
     def timeForMISSSIONNNNN(self): # This is still a DougDoug reference
-        return f"[{self.name}] is making [{self.whichMeal}]! Specifically [{max(1,floor(randint(10, 15)/10*randint(10, 200)-self.age*1.5))}] orders of [{self.whichMeal}]"
+        return f"[{self.name}] is making \[{self.whichMeal}]! Specifically [{max(1,floor(randint(10, 15)/10*randint(10, 200)-self.age*1.5))}] orders of \[{self.whichMeal}]"
 
     def recharge(self):
         self.state = "chargin'"
@@ -112,16 +112,32 @@ class RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety(FoolishOS): # This
         self.hp = hp
         if hp == None:
             self.hp = self.maxHP
-        self.roboticMana
+        self.roboticMana = maxRoboticMana
         if roboticMana == None:
             self.roboticMana = self.maxRoboticMana
 
+    def haveANiceChitChat(self):
+        return f"I am [{self.name}], and I am a Robotic Spider That Will Eat Everyone You Know And Love (for safety) that has existed for [{self.age}] Space Years (TM).\nI devour things in [{self.area}].\nMy current power level is at [{self.power/(self.maxPower/100):.2f}%], aka [{self.power:.2f}/{self.maxPower} KW] and I use [{self.kwh} KWH].\nI am currently on [{self.hp}/{self.maxHP} HP], [{self.roboticMana:.2f}/{self.maxRoboticMana} ROBOTIC MANA] and I am currently [{self.state}].\nMy base damage is [{self.baseDmg}], can vary with [{self.variableDmg}] and my secret move is [{self.secretMove}]"
+
+    def tickThisMachine(self):
+        if self.state == "exploded":
+            return f"[{self.name}] is exploded"
+        elif self.hp == 0:
+            return f"[{self.name}] is defeated"
+        self.roboticMana += self.maxRoboticMana / 10 + self.roboticMana / 25
+        if self.roboticMana > self.maxRoboticMana:
+            self.roboticMana = self.maxRoboticMana
+        return super().tickThisMachine()
+
     def timeForMISSSIONNNNN(self): # Despite everything, it's still a DougDoug reference
-        if randint(1,3) == 3 or self.state == "combat":
+        brainwaves = randint(1,15)
+        if brainwaves <= 6 or self.state == "combat":
             pass # initiate combat
-        elif randint(1,9) == 9:
-            pass # create a new Robotic Spider that will eat everyone you know and love for safety. They art a parasite
-        elif randint(1,27) == 27:
+        elif brainwaves <= 8 and self.roboticMana >= floor(self.maxRoboticMana/2): # create a new Robotic Spider that will eat everyone you know and love for safety. They art a parasite
+            offspring = RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety(f"{self.name}+", self.area, self.maxPower + randint(1, 10), self.kwh, 0, self.maxHP + randint(1, 10), self.maxRoboticMana + randint(1, 10), self.baseDmg + randint(1, 10), (self.variableDmg[0] + randint(1, 5), self.variableDmg[1] + randint(5, 10)), self.secretMove)
+            self.roboticMana -= floor(self.maxRoboticMana/2)
+            return f"[{self.name}] cloned itself using [{floor(self.maxRoboticMana/2)} ROBOTIC MANA]."
+        elif brainwaves == 15:
             self.hp = 0
             self.state = "exploded"
             return f"[{self.name}] randomly just exploded. It's dead now. Yikes."
