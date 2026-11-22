@@ -6,8 +6,10 @@ import os
 johnOS = FoolishOS("FoolishOS", "EVERYWHERE and EVERYWHEN", 10, 0.01, 10000)
 kawasaki = CheffOTron("Chef Kawasaki", "Cappy Sector", 1000, 1.72, 25, "thin-wiches")
 bump = Merrymer("Bump and Uctions", "Game Zone 3000", 124, 2.32, 4, ["The Binding of Isaac", "Shadow the Hedgehog", "Donkey Kong Bonanza"], "The ULTIMATE GAME")
-turbo = RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety("Turbo", "Suger Rush", 1000, 0.73, 20, 200, 100, 7, (-7,4), "Turbotastic")
+turbo = RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety("Turbo", "Suger Rush", 100, 0.73, 20, 200, 100, 7, (-7,4), "Turbotastic")
+zi = RoboticSpiderThatWillEatEveryoneYouKnowAndLoveForSafety("Steel Soul Zi", "City of Steel", 300, 1.37, 10, 100, 200, 20, (5,10), "Save-Quit")
 
+os.system('cls' if os.name == 'nt' else 'clear')
 onlyRSTWEEYKALFS = input("Do you only want to see Robotic Spiders That Will Eat Everyone You Know And Love For Safety?\n").lower().strip()
 while True:
     for machination in machinations:
